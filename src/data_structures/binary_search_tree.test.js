@@ -104,22 +104,94 @@ dataStructures.forEach(TargetDS => {
 
     describe('delete', () => {
       it('returns the value for the removed record', () => {
+        const records = [
+          { key: 'one', value: 'first' },
+          { key: 'two', value: 'second' },
+          { key: 'three', value: 'third' },
+          { key: 'four', value: 'fourth' },
+          { key: 'five', value: 'fifth' },
+        ];
+        records.forEach(({ key, value }) => {
+          bst.insert(key, value);
+        });
 
+        records.forEach(({ key, value }) => {
+          expect(bst.delete(key)).toBe(value);
+        });
       });
 
       it('returns undefined if the record was not found', () => {
+        const records = [
+          { key: 'one', value: 'first' },
+          { key: 'two', value: 'second' },
+          { key: 'three', value: 'third' },
+          { key: 'four', value: 'fourth' },
+          { key: 'five', value: 'fifth' },
+        ];
+        records.forEach(({ key, value }) => {
+          bst.insert(key, value);
+        });
 
+        expect(bst.delete('bollocks')).toBe(undefined);
       });
 
       it('reduces the count by 1', () => {
+        const records = [
+          { key: 'one', value: 'first' },
+          { key: 'two', value: 'second' },
+          { key: 'three', value: 'third' },
+          { key: 'four', value: 'fourth' },
+          { key: 'five', value: 'fifth' },
+        ];
+        records.forEach(({ key, value }) => {
+          bst.insert(key, value);
+        });
 
+        expect(bst.count()).toBe(records.length);
+        bst.delete(records[0].key);
+        expect(bst.count()).toBe(records.length - 1);
       });
 
       it('omits the removed record from iteration results', () => {
+        const records = [
+          { key: 'one', value: 'first' },
+          { key: 'two', value: 'second' },
+          { key: 'three', value: 'third' },
+          { key: 'four', value: 'fourth' },
+          { key: 'five', value: 'fifth' },
+        ];
+
+        records.forEach(({ key, value }) => {
+          bst.insert(key, value);
+        });
+
+        const deleted = records[3].key;
+
+        bst.delete(deleted);
+
+        bst.forEach(({ key }) => expect(key).not.toBe(deleted));
+        expect(bst.lookup(deleted)).toBe(undefined);
 
       });
 
       it('can remove every element in a tree', () => {
+        const records = [
+          { key: 'one', value: 'first' },
+          { key: 'two', value: 'second' },
+          { key: 'three', value: 'third' },
+          { key: 'four', value: 'fourth' },
+          { key: 'five', value: 'fifth' },
+        ];
+        records.forEach(({ key, value }) => {
+          bst.insert(key, value);
+        });
+
+        expect(bst.count()).toBe(records.length);
+
+        records.forEach(({ key, value }) => {
+          bst.delete(key);
+        });
+        expect(bst.count()).toBe(0);
 
       });
 

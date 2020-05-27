@@ -16,7 +16,42 @@ class BinarySearchTree {
   }
 
   insert(key, value = true) {
-    // TODO
+    let currNode = this._root;
+
+    if (!currNode) {
+      this._root = new BSTNode({key, value});
+      this._count++;
+      return;
+    }
+
+    const newNode = new BSTNode({key, value, currNode});
+
+    while (currNode) {
+      const foundKey = key === currNode.key;
+      if (foundKey) {
+        currNode.value = value;
+        break;
+      }
+
+      const goLeft = key < currNode.key;
+      if (goLeft) {
+        if (currNode.left) {
+          currNode = currNode.left;
+        } else {
+          currNode.left = newNode;
+          this._count++;
+          break;
+        }
+      } else {
+        if (currNode.right) {
+          currNode = currNode.right;
+        } else {
+          currNode.right = newNode;
+          this._count++;
+          break;
+        }
+      }
+    }
   }
 
   lookup(key) {
@@ -35,6 +70,38 @@ class BinarySearchTree {
 
   delete(key) {
     // TODO (tests first!)
+    let currNode = this._root;
+
+    if (!currNode) {
+      return;
+    }
+
+    while (currNode) {
+      const foundKey = key === currNode.key;
+      if (foundKey) {
+        currNode.value = value;
+        break;
+      }
+
+      const goLeft = key < currNode.key;
+      if (goLeft) {
+        if (currNode.left) {
+          currNode = currNode.left;
+        } else {
+          currNode.left = newNode;
+          this._count++;
+          break;
+        }
+      } else {
+        if (currNode.right) {
+          currNode = currNode.right;
+        } else {
+          currNode.right = newNode;
+          this._count++;
+          break;
+        }
+      }
+    }
   }
 
   count() {
